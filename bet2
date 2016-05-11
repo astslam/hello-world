@@ -1,0 +1,156 @@
+using System;
+using System.IO;
+using System.Linq;
+
+namespace FileApplication
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string[] bettype = new string[] { "WIN", "PLA", "QIN", "QPL", "TRI", "CW" }; /*array of bettypes*/
+
+            
+            //generate array 
+            string[] scalibrator = new string[65];  /*output text to calibrator (string)*/
+            //double[] dcalibrator = new double[65]; /*output text to calibrator*/
+            //dcalibrator[0] = "racebet(0306,1) {0} $100 "
+
+            int[]  Ri = new int[10]; /* Ri is number of races, an array of 10 integers */
+            //int m, n, s; /*m = race no, n = no of horses, s = no of selections */
+            //m = 2;
+                                   
+            /* initialize elements of array x */
+            for (int x = 2; x < 7; x++)
+            {
+                Ri[x] = x ;
+            }
+
+            //int[] mm = { 2, 3, 4, 5, 6};
+            //int[] n = { , 5, 6, 1, 2, 3, -2, -1, 0 };
+
+            Console.Write("Input Bettype (WIN, PLA, QIN, QPL, TRI ): ");
+            string BetType_1 = Console.ReadLine();
+
+            for (int m = 2; m < 7; m++)
+            {
+               
+                double[] race = new double[m];
+                string[] bet = new string[m];
+
+                for (int n = 1; n < 64; n++)
+                {
+                    double[] Nrace = new double[n];
+                    for (int i = 1; i < m; i++)
+                    {
+                        race[i] = i;
+                        //Console.WriteLine(race[i]);
+
+
+
+                        bet[i] = BetType_1;
+                        //bet[i] = bettype[1]; //+  " " + i + "*" + "1+2+3" +"/"; /*   WIN 0*1+2+3/  */
+                        Console.WriteLine(bet[i]);
+
+                        // }
+
+                        //Console.WriteLine(race);
+                        Console.WriteLine("racebet(0306,1) ST SUN {0}x{1} {2} 1*1 ", m, n, bet[i]);
+                        scalibrator[n] = string.Format("racebet(0306,1) ST SUN {0}x{1} {2} 1*1", m, n, bet[i]);
+                        //Console.WriteLine(Ri[i]);
+
+                        int sz = race.Count();
+                        for (int szi = 0; szi < sz-1; szi++)
+                        {
+                            scalibrator[n] += string.Format("/");
+                            //Console.WriteLine("Size of Race is : {0}, race is {1}", szi, race[i]);
+                            scalibrator[n] += string.Format(" {0} {1}*1", bet[i], szi + 2);
+
+                            //Console.ReadKey();
+                        }
+
+                        scalibrator[n] += string.Format(" $10");
+                        Console.WriteLine(scalibrator[n]);
+
+
+                        //if (i<n+1)
+                        //{
+                        //    scalibrator[n] += string.Format("/");
+
+                        //    scalibrator[n] += string.Format("WIN {0}*1", race[i]);
+
+                        //}
+                        //else
+
+                        //scalibrator[n] += string.Format("$100");
+                        //Console.WriteLine(scalibrator[n]);
+
+                    }
+
+                }
+                /*write to m-th text file*/
+
+                string filename_p = "N_Race" + m + "_" + Convert.ToString(BetType_1); 
+                //string filename_p = "N_Race" + m + "_" + Convert.ToString(bettype[1]);
+                using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename_p + ".txt"))
+                {
+                    foreach (string k in scalibrator)
+                    {
+                        sw.WriteLine(k);
+                    }
+
+                    //foreach (string s in names)
+                    //{
+                    //    sw.WriteLine(s);
+                    //}
+                }
+
+            }
+
+            
+            //Write lines into file
+            /*sample*/
+            //string[] names = new string[] { "Zara Ali", "Nuha Ali" };
+
+            Console.WriteLine("Reading from test file");
+            string filename = "N_Race" + "test";//i;
+            string line = "";
+            using (StreamReader sw = new StreamReader("C:/Users/simonasmlam/Work/"+filename+".txt"))
+            {
+
+                {
+                    while ((line = sw.ReadLine()) != null)
+                {
+                    Console.WriteLine(line);
+                }
+
+
+                //line = sr.ReadLine()
+                //foreach (string k in line)
+                //{
+                //    sw.WriteLine(k);
+                //}
+
+                //foreach (string s in names)
+                //{
+                //    sw.WriteLine(s);
+                //}
+            }
+
+            /*Read and show each line from the file.*/
+            //string line = "";
+            //using (StreamReader sr = new StreamReader("C:/Users/simonasmlam/Work/test2.txt"))
+            //{
+            //    while ((line = sr.ReadLine()) != null)
+            //    {
+            //        Console.WriteLine(line);
+            //    }
+            //}
+
+            Console.ReadKey();
+            }
+    }
+  }
+}
+
