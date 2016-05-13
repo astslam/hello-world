@@ -1,0 +1,382 @@
+using System;
+using System.IO;
+using System.Linq;
+
+namespace FileApplication
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            string[] bettype = new string[] { "WIN", "PLA", "QIN", "QPL", "TRI", "CW" }; /*array of bettypes*/
+
+            Console.WriteLine(bettype[0]);
+            
+
+            /**********************************/
+            /*Print Combinations to file*/
+            /*Cross Pool*/
+            /**********************************/
+
+            string[] Choose2 = new string[200];           
+            string[] Choose3 = new string[200];
+            string[] Choose4 = new string[1000];
+            string[] Choose5 = new string[2000];
+            string[] Choose6 = new string[5000];
+
+            string[] Selection1 = new string[3];
+            string[] Selection2 = new string[3];
+            string[] Selection3 = new string[10];
+            string[] Selection4 = new string[10];
+            string[] Selection5 = new string[10];
+            string[] Selection6 = new string[10];
+
+
+            for (int k0 = 0; k0 < 1; k0++)
+            {
+                for (int k1 = 0; k1 < 4; k1++)
+                {
+
+
+                    if (bettype[k1] == "QIN" || bettype[k1] == "QPL")
+                    { Selection1[0] = "1+2"; }
+                    else if (bettype[k1] == "WIN" || bettype[k1] ==  "PLA")
+                    { Selection1[0] = "1"; }
+                    for (int k2 = 0; k2 < 4; k2++)
+                    {
+
+                        /*Construct racebet lines*/
+                        Choose2[k0] += string.Format("racebet(0306,1) ST SUN 2x1 ");
+
+                        if (bettype[k2] == "QIN" || bettype[k2] == "QPL")
+                        {Selection2[0] = "1+2";
+                            Choose2[k0] += string.Format("{0} 1*{1} / {2} 2*{3} ", bettype[k1], Selection1[0], bettype[k2], Selection2[0]);
+                        }
+                        else if (bettype[k2] == "WIN" || bettype[k2] == "PLA")
+                        {Selection2[0] = "1";
+                            Choose2[k0] += string.Format("{0} 1*{1} / {2} 2*{3} ", bettype[k1], Selection1[0], bettype[k2], Selection2[0]);
+                        }
+
+                        Choose2[k0] += string.Format(" $10 \r\n"); 
+                        //Choose2[k0] += string.Format("racebet(0306,1) ST SUN {0} 1*1 / {1} 2*1 $10 \r\n", bettype[k1], bettype[k2]);
+
+                        /*End of racebet line*/
+
+                        for (int k3 = 0; k3 < 4; k3++)
+                        {
+                            /*Construct racebet lines*/
+                            Choose3[k0] += string.Format("racebet(0306,1) ST SUN 3x1 ");
+
+                            if (bettype[k3] == "QIN" || bettype[k3] == "QPL")
+                            {
+                                Selection3[0] = "1+2";
+                                Choose3[k0] += string.Format("{0} 1*{1} / {2} 2*{3} / {4} 3*{5}", bettype[k1], Selection1[0], bettype[k2], Selection2[0], bettype[k3], Selection3[0]);
+                            }
+                            else if (bettype[k3] == "WIN" || bettype[k3] == "PLA")
+                            {
+                                Selection3[0] = "1";
+                                Choose3[k0] += string.Format("{0} 1*{1} / {2} 2*{3} / {4} 3*{5}", bettype[k1], Selection1[0], bettype[k2], Selection2[0], bettype[k3], Selection3[0]);
+                            }
+
+                            Choose3[k0] += string.Format(" $10 \r\n");
+                            /*End of racebet line*/
+
+                            //Choose3[k0] += string.Format("racebet(0306,1) ST SUN {0} 1*1 / {1} 2*1 / {2} 3*1 $10 \r\n", bettype[k1], bettype[k2], bettype[k3]);
+
+                            for (int k4 = 0; k4 < 4; k4++)
+                            {
+
+                                /*Construct racebet lines*/
+                                Choose4[k0] += string.Format("racebet(0306,1) ST SUN 4x1 ");
+
+                                if (bettype[k4] == "QIN" || bettype[k4] == "QPL")
+                                {
+                                    Selection4[0] = "1+2";
+                                    Choose4[k0] += string.Format("{0} 1*{1} / {2} 2*{3} / {4} 3*{5} / {6} 4*{7}", bettype[k1], Selection1[0], bettype[k2], Selection2[0], bettype[k3], Selection3[0], bettype[k4], Selection4[0]);
+                                }
+                                else if (bettype[k4] == "WIN" || bettype[k4] == "PLA")
+                                {
+                                    Selection4[0] = "1";
+                                    Choose4[k0] += string.Format("{0} 1*{1} / {2} 2*{3} / {4} 3*{5} / {6} 4*{7}", bettype[k1], Selection1[0], bettype[k2], Selection2[0], bettype[k3], Selection3[0], bettype[k4], Selection4[0]);
+                                }
+
+                                Choose4[k0] += string.Format(" $10 \r\n");
+                                /*End of racebet line*/
+
+                                //Choose4[k0] += string.Format("racebet(0306,1) ST SUN {0} 1*1 / {1} 2*1 / {2} 3*1 / {3} 4*1 $10 \r\n", bettype[k1], bettype[k2], bettype[k3], bettype[k4]);
+
+                                for (int k5 =0; k5<4; k5++)
+                                {
+
+                                    /*Construct racebet lines*/
+                                    Choose5[k0] += string.Format("racebet(0306,1) ST SUN 5x1 ");
+
+                                    if (bettype[k5] == "QIN" || bettype[k5] == "QPL")
+                                    {
+                                        Selection5[0] = "1+2";
+                                        Choose5[k0] += string.Format("{0} 1*{1} / {2} 2*{3} / {4} 3*{5} / {6} 4*{7} / {8} 5*{9}", bettype[k1], Selection1[0], bettype[k2], Selection2[0], bettype[k3], Selection3[0], bettype[k4], Selection4[0], bettype[k5], Selection5[0]);
+                                    }
+                                    else if (bettype[k5] == "WIN" || bettype[k5] == "PLA")
+                                    {
+                                        Selection5[0] = "1";
+                                        Choose5[k0] += string.Format("{0} 1*{1} / {2} 2*{3} / {4} 3*{5} / {6} 4*{7} / {8} 5*{9}", bettype[k1], Selection1[0], bettype[k2], Selection2[0], bettype[k3], Selection3[0], bettype[k4], Selection4[0], bettype[k5], Selection5[0]);
+                                    }
+
+                                    Choose5[k0] += string.Format(" $10 \r\n");
+                                    /*End of racebet line*/
+
+                                    //Console.WriteLine("{0} / {1} / {2}", bettype[k1], bettype[k2], bettype[k3]);
+                                    //Choose5[k0] += string.Format("racebet(0306,1) ST SUN {0} 1*1 / {1} 2*1 / {2} 3*1 / {3} 4*1 /{4} 5*1 $10 \r\n", bettype[k1], bettype[k2], bettype[k3], bettype[k4], bettype[k5]);
+
+                                    for (int k6 = 0; k6<4; k6++)
+                                    {
+
+                                        /*Construct racebet lines*/
+                                        Choose6[k0] += string.Format("racebet(0306,1) ST SUN 6x1 ");
+
+                                        if (bettype[k6] == "QIN" || bettype[k6] == "QPL")
+                                        {
+                                            Selection6[0] = "1+2";
+                                            Choose6[k0] += string.Format("{0} 1*{1} / {2} 2*{3} / {4} 3*{5} / {6} 4*{7} / {8} 5*{9} / {10} 6*{11} ", bettype[k1], Selection1[0], bettype[k2], Selection2[0], bettype[k3], Selection3[0], bettype[k4], Selection4[0], bettype[k5], Selection5[0], bettype[k6], Selection6[0]);
+                                        }
+                                        else if (bettype[k6] == "WIN" || bettype[k6] == "PLA")
+                                        {
+                                            Selection6[0] = "1";
+                                            Choose6[k0] += string.Format("{0} 1*{1} / {2} 2*{3} / {4} 3*{5} / {6} 4*{7} / {8} 5*{9} / {10} 6*{11} ", bettype[k1], Selection1[0], bettype[k2], Selection2[0], bettype[k3], Selection3[0], bettype[k4], Selection4[0], bettype[k5], Selection5[0], bettype[k6], Selection6[0]);
+                                        }
+
+                                        Choose6[k0] += string.Format(" $10 \r\n");
+                                        /*End of racebet line*/
+
+                                        //Choose6[k0] += string.Format("racebet(0306,1) ST SUN {0} 1*1 / {1} 2*1 / {2} 3*1 / {3} 4*1 /{4} 5*1 / {5} 6*1 $10 \r\n", bettype[k1], bettype[k2], bettype[k3], bettype[k4], bettype[k5], bettype[k6]);
+
+                                    }
+                                }                                
+                            }
+                        }
+                    }
+                }
+            }
+
+            /********************/
+            //Save to file 
+            /********************/
+
+            /*Write to file2*/
+            string filename2 = "Choose2";
+            using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename2 + ".txt"))
+            {
+                foreach (string k22 in Choose2)
+                {
+                    sw.WriteLine(k22);
+                    sw.WriteLine(" ");
+                }
+            }
+
+            ///*Read file2*/
+            //Console.WriteLine("Reading from test file");
+            //string line2 = "";
+            //using (StreamReader sw = new StreamReader("C:/Users/simonasmlam/Work/" + filename2 + ".txt"))
+            //{
+
+            //    {
+            //        while ((line2 = sw.ReadLine()) != null)
+            //        {
+            //            if (line2 != null)
+            //            {
+            //                Console.WriteLine(line2);
+            //                //Console.ReadKey();
+            //            }
+            //        }
+            //    }
+            //}
+
+            //Console.WriteLine("Continue Write to File3 ...");
+            //Console.ReadKey();
+
+
+            /*Write to file3*/
+            string filename3 = "Choose3";
+            using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename3 + ".txt"))
+            {
+                foreach (string k33 in Choose3)
+                {
+                    sw.WriteLine(k33);
+                    sw.WriteLine(" ");
+                }
+            }
+
+            string filename4 = "Choose4";
+            using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename4 + ".txt"))
+            {
+                foreach (string k44 in Choose4)
+                {
+                    sw.WriteLine(k44);
+                    sw.WriteLine(" ");
+                }
+            }
+
+            string filename5 = "Choose5";
+            using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename5 + ".txt"))
+            {
+                foreach (string k55 in Choose5)
+                {
+                    sw.WriteLine(k55);
+                    sw.WriteLine(" ");
+                }
+            }
+
+            string filename6 = "Choose6";
+            using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename6 + ".txt"))
+            {
+                foreach (string k66 in Choose6)
+                {
+                    sw.WriteLine(k66);
+                    //sw.WriteLine(" ");
+                }
+            }
+
+            Console.WriteLine("Saved files Choose2-6 to C:/Users/simonasmlam/Work/ ");
+            Console.WriteLine("Continue....");
+            Console.ReadKey();
+
+
+            /********************/
+            //Generate Racebet 
+            /********************/
+
+            //generate array 
+            string[] scalibrator = new string[65];  /*output text to calibrator (string)*/
+            //double[] dcalibrator = new double[65]; /*output text to calibrator*/
+            //dcalibrator[0] = "racebet(0306,1) {0} $100 "
+
+            int[]  Ri = new int[10]; /* Ri is number of races, an array of 10 integers */
+            //int m, n, s; /*m = race no, n = no of horses, s = no of selections */
+            //m = 2;
+                                   
+            /* initialize elements of array x */
+            for (int x = 2; x < 7; x++)
+            {
+                Ri[x] = x ;
+            }
+
+            //int[] mm = { 2, 3, 4, 5, 6};
+            //int[] n = { , 5, 6, 1, 2, 3, -2, -1, 0 };
+
+            Console.Write("Input Bettype (WIN, PLA, QIN, QPL, TRI ): ");
+            string BetType_1 = Console.ReadLine();
+
+            for (int m = 2; m < 7; m++)
+            {
+               
+                double[] race = new double[m];
+                string[] bet = new string[m];
+
+                for (int n = 1; n < 64; n++)
+                {
+                    double[] Nrace = new double[n];
+                    for (int i = 1; i < m; i++)
+                    {
+                        race[i] = i;
+                        //Console.WriteLine(race[i]);
+                        
+                        bet[i] = BetType_1;
+                        //bet[i] = bettype[1]; //+  " " + i + "*" + "1+2+3" +"/"; /*   WIN 0*1+2+3/  */
+                        //Console.WriteLine(bet[i]);
+
+                        // }
+
+                        //Console.WriteLine(race);
+                        Console.WriteLine("racebet(0306,1) ST SUN {0}x{1} {2} 1*1 ", m, n, bet[i]);
+                        scalibrator[n] = string.Format("racebet(0306,1) ST SUN {0}x{1} {2} 1*1", m, n, bet[i]);
+                        //Console.WriteLine(Ri[i]);
+
+                        int sz = race.Count();
+                        for (int szi = 0; szi < sz-1; szi++)
+                        {
+                            scalibrator[n] += string.Format("/");
+                            //Console.WriteLine("Size of Race is : {0}, race is {1}", szi, race[i]);
+                            scalibrator[n] += string.Format(" {0} {1}*1", bet[i], szi + 2);
+
+                            //Console.ReadKey();
+                        }
+
+                        scalibrator[n] += string.Format(" $10");
+                        Console.WriteLine(scalibrator[n]);
+
+
+                        //if (i<n+1)
+                        //{
+                        //    scalibrator[n] += string.Format("/");
+
+                        //    scalibrator[n] += string.Format("WIN {0}*1", race[i]);
+
+                        //}
+                        //else
+
+                        //scalibrator[n] += string.Format("$100");
+                        //Console.WriteLine(scalibrator[n]);
+
+                    }
+
+                }
+                /*write to m-th text file*/
+
+                string filename_p = "N_Race" + m + "_" + Convert.ToString(BetType_1); 
+                //string filename_p = "N_Race" + m + "_" + Convert.ToString(bettype[1]);
+                using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename_p + ".txt"))
+                {
+                    foreach (string k in scalibrator)
+                    {
+                        sw.WriteLine(k);
+                    }
+                }
+            }
+
+            
+            //Write lines into file
+            /*sample*/
+            //string[] names = new string[] { "Zara Ali", "Nuha Ali" };
+
+            Console.WriteLine("Reading from test file");
+            string filename = "N_Race" + "test";//i;
+            string line = "";
+            using (StreamReader sw = new StreamReader("C:/Users/simonasmlam/Work/"+filename+".txt"))
+            {
+
+                {
+                    while ((line = sw.ReadLine()) != null)
+                {
+                    //Console.WriteLine(line);
+                }
+
+
+                //line = sr.ReadLine()
+                //foreach (string k in line)
+                //{
+                //    sw.WriteLine(k);
+                //}
+
+                //foreach (string s in names)
+                //{
+                //    sw.WriteLine(s);
+                //}
+            }
+
+            /*Read and show each line from the file.*/
+            //string line = "";
+            //using (StreamReader sr = new StreamReader("C:/Users/simonasmlam/Work/test2.txt"))
+            //{
+            //    while ((line = sr.ReadLine()) != null)
+            //    {
+            //        Console.WriteLine(line);
+            //    }
+            //}
+
+            Console.ReadKey();
+            }
+    }
+  }
+}
+
