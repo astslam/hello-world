@@ -9,15 +9,26 @@ namespace FileApplication
         static void Main(string[] args)
         {
 
-            string[] bettype = new string[] { "WIN", "PLA", "QIN", "QPL", "TRI", "CW" }; /*array of bettypes*/
+            Console.WriteLine(" **** Printing Cross Pool All-Up ****");
 
-            Console.WriteLine(bettype[0]);
-            
+            string[] bettype = new string[] { "WIN", "PLA", "QIN", "QPL", "TRI", "CW" }; /*array of bettypes*/
 
             /**********************************/
             /*Print Combinations to file*/
             /*Cross Pool*/
             /**********************************/
+
+            Console.WriteLine("Input All-Up 2x type: ");
+                string AllUp2 = Console.ReadLine();
+            Console.WriteLine("Input All-Up 3x type: ");
+            string AllUp3 = Console.ReadLine();
+            Console.WriteLine("Input All-Up 4x type: ");
+            string AllUp4 = Console.ReadLine();
+            Console.WriteLine("Input All-Up 5x type: ");
+            string AllUp5 = Console.ReadLine();
+            Console.WriteLine("Input All-Up 6x type: ");
+            string AllUp6 = Console.ReadLine();
+
 
             string[] Choose2 = new string[200];           
             string[] Choose3 = new string[200];
@@ -47,7 +58,7 @@ namespace FileApplication
                     {
 
                         /*Construct racebet lines*/
-                        Choose2[k0] += string.Format("racebet(0306,1) ST SUN 2x1 ");
+                        Choose2[k0] += string.Format("racebet(0306,1) ST SUN {0} ", AllUp2);
 
                         if (bettype[k2] == "QIN" || bettype[k2] == "QPL")
                         {Selection2[0] = "1+2";
@@ -66,7 +77,7 @@ namespace FileApplication
                         for (int k3 = 0; k3 < 4; k3++)
                         {
                             /*Construct racebet lines*/
-                            Choose3[k0] += string.Format("racebet(0306,1) ST SUN 3x1 ");
+                            Choose3[k0] += string.Format("racebet(0306,1) ST SUN {0} ", AllUp3);
 
                             if (bettype[k3] == "QIN" || bettype[k3] == "QPL")
                             {
@@ -88,7 +99,7 @@ namespace FileApplication
                             {
 
                                 /*Construct racebet lines*/
-                                Choose4[k0] += string.Format("racebet(0306,1) ST SUN 4x1 ");
+                                Choose4[k0] += string.Format("racebet(0306,1) ST SUN {0} ", AllUp4);
 
                                 if (bettype[k4] == "QIN" || bettype[k4] == "QPL")
                                 {
@@ -110,7 +121,7 @@ namespace FileApplication
                                 {
 
                                     /*Construct racebet lines*/
-                                    Choose5[k0] += string.Format("racebet(0306,1) ST SUN 5x1 ");
+                                    Choose5[k0] += string.Format("racebet(0306,1) ST SUN {0} ", AllUp5);
 
                                     if (bettype[k5] == "QIN" || bettype[k5] == "QPL")
                                     {
@@ -133,7 +144,7 @@ namespace FileApplication
                                     {
 
                                         /*Construct racebet lines*/
-                                        Choose6[k0] += string.Format("racebet(0306,1) ST SUN 6x1 ");
+                                        Choose6[k0] += string.Format("racebet(0306,1) ST SUN {0} ", AllUp6);
 
                                         if (bettype[k6] == "QIN" || bettype[k6] == "QPL")
                                         {
@@ -164,7 +175,7 @@ namespace FileApplication
             /********************/
 
             /*Write to file2*/
-            string filename2 = "Choose2";
+            string filename2 = "Choose2 " + AllUp2 + " ";
             using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename2 + ".txt"))
             {
                 foreach (string k22 in Choose2)
@@ -197,7 +208,7 @@ namespace FileApplication
 
 
             /*Write to file3*/
-            string filename3 = "Choose3";
+            string filename3 = "Choose3 " + AllUp3 + " ";
             using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename3 + ".txt"))
             {
                 foreach (string k33 in Choose3)
@@ -207,7 +218,7 @@ namespace FileApplication
                 }
             }
 
-            string filename4 = "Choose4";
+            string filename4 = "Choose4 " + AllUp4 + " ";
             using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename4 + ".txt"))
             {
                 foreach (string k44 in Choose4)
@@ -217,7 +228,7 @@ namespace FileApplication
                 }
             }
 
-            string filename5 = "Choose5";
+            string filename5 = "Choose5 " + AllUp5 + " ";
             using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename5 + ".txt"))
             {
                 foreach (string k55 in Choose5)
@@ -227,7 +238,7 @@ namespace FileApplication
                 }
             }
 
-            string filename6 = "Choose6";
+            string filename6 = "Choose6 " + AllUp6 + " ";
             using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename6 + ".txt"))
             {
                 foreach (string k66 in Choose6)
@@ -242,11 +253,11 @@ namespace FileApplication
             Console.ReadKey();
 
 
-            /********************/
-            //Generate Racebet 
-            /********************/
+            /************************************/
+            //Generate Unified w 1 selection bettype Racebet 
+            /************************************/
 
-            //generate array 
+            /*generate array */
             string[] scalibrator = new string[65];  /*output text to calibrator (string)*/
             //double[] dcalibrator = new double[65]; /*output text to calibrator*/
             //dcalibrator[0] = "racebet(0306,1) {0} $100 "
@@ -265,7 +276,7 @@ namespace FileApplication
             //int[] n = { , 5, 6, 1, 2, 3, -2, -1, 0 };
 
             Console.Write("Input Bettype (WIN, PLA, QIN, QPL, TRI ): ");
-            string BetType_1 = Console.ReadLine();
+            string BetType = Console.ReadLine();
 
             for (int m = 2; m < 7; m++)
             {
@@ -281,7 +292,16 @@ namespace FileApplication
                         race[i] = i;
                         //Console.WriteLine(race[i]);
                         
-                        bet[i] = BetType_1;
+                        if(BetType != null)
+                        {
+                            bet[i] = BetType;
+                        }
+                        else
+                            {
+                            
+                            bet[i] = "WIN";
+                        }
+
                         //bet[i] = bettype[1]; //+  " " + i + "*" + "1+2+3" +"/"; /*   WIN 0*1+2+3/  */
                         //Console.WriteLine(bet[i]);
 
@@ -323,7 +343,7 @@ namespace FileApplication
                 }
                 /*write to m-th text file*/
 
-                string filename_p = "N_Race" + m + "_" + Convert.ToString(BetType_1); 
+                string filename_p = "N_Race" + m + "_" + Convert.ToString(BetType); 
                 //string filename_p = "N_Race" + m + "_" + Convert.ToString(bettype[1]);
                 using (StreamWriter sw = new StreamWriter("C:/Users/simonasmlam/Work/" + filename_p + ".txt"))
                 {
@@ -340,7 +360,7 @@ namespace FileApplication
             //string[] names = new string[] { "Zara Ali", "Nuha Ali" };
 
             Console.WriteLine("Reading from test file");
-            string filename = "N_Race" + "test";//i;
+            string filename = "Choose2";  //"N_Race" + "test";//i;
             string line = "";
             using (StreamReader sw = new StreamReader("C:/Users/simonasmlam/Work/"+filename+".txt"))
             {
@@ -348,7 +368,7 @@ namespace FileApplication
                 {
                     while ((line = sw.ReadLine()) != null)
                 {
-                    //Console.WriteLine(line);
+                    Console.WriteLine(line);
                 }
 
 
@@ -364,17 +384,19 @@ namespace FileApplication
                 //}
             }
 
-            /*Read and show each line from the file.*/
-            //string line = "";
-            //using (StreamReader sr = new StreamReader("C:/Users/simonasmlam/Work/test2.txt"))
-            //{
-            //    while ((line = sr.ReadLine()) != null)
-            //    {
-            //        Console.WriteLine(line);
-            //    }
-            //}
+                /*Read and show each line from the file.*/
+                //string line = "";
+                //using (StreamReader sr = new StreamReader("C:/Users/simonasmlam/Work/test2.txt"))
+                //{
+                //    while ((line = sr.ReadLine()) != null)
+                //    {
+                //        Console.WriteLine(line);
+                //    }
+                //}
 
-            Console.ReadKey();
+
+                Console.WriteLine("****End****");
+                Console.ReadKey();
             }
     }
   }
