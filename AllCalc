@@ -1,0 +1,1216 @@
+Sub Macro1()
+        
+        Set oexcel = CreateObject("excel.application")
+        Set oBook = oexcel.Workbooks.Open("C:\Users\TOMJWNIE\Desktop\TEST.xlsx")
+        Set oSheet = oBook.Sheets("Sheet1")
+        Set fso = CreateObject("scripting.filesystemobject")
+        Set Dics = CreateObject("scripting.Dictionary")
+        
+        Dics.Add "2x1", "0,1,0,0,0,0,0,0"
+        Dics.Add "2x3", "2,1,0,0,0,0,0,0"
+        
+        Dics.Add "3x1", "0,0,1,0,0,0,0,0"
+        Dics.Add "3x3", "0,3,0,0,0,0,0,0"
+        Dics.Add "3x4", "0,3,1,0,0,0,0,0"
+        Dics.Add "3x6", "3,3,0,0,0,0,0,0"
+        Dics.Add "3x7", "3,3,1,0,0,0,0,0"
+        
+        Dics.Add "4x1", "0,0,0,1,0,0,0,0"
+        Dics.Add "4x4", "0,0,4,0,0,0,0,0"
+        Dics.Add "4x5", "0,0,4,1,0,0,0,0"
+        Dics.Add "4x6", "0,6,0,0,0,0,0,0"
+        Dics.Add "4x10", "4,6,0,0,0,0,0,0"
+        Dics.Add "4x11", "0,6,4,1,0,0,0,0"
+        Dics.Add "4x14", "4,6,4,0,0,0,0,0"
+        Dics.Add "4x15", "4,6,4,1,0,0,0,0"
+        
+        Dics.Add "5x1", "0,0,0,0,1,0,0,0"
+        Dics.Add "5x5", "0,0,0,5,0,0,0,0"
+        Dics.Add "5x6", "0,0,0,5,1,0,0,0"
+        Dics.Add "5x10", "0,10,0,0,0,0,0,0"
+        Dics.Add "5x15", "5,10,0,0,0,0,0,0"
+        Dics.Add "5x16", "0,0,10,5,1,0,0,0"
+        Dics.Add "5x20", "0,10,10,0,0,0,0,0"
+        Dics.Add "5x25", "5,10,10,0,0,0,0,0"
+        Dics.Add "5x26", "0,10,10,5,1,0,0,0"
+        Dics.Add "5x30", "5,10,10,5,0,0,0,0"
+        Dics.Add "5x31", "5,10,10,5,1,0,0,0"
+        
+        Dics.Add "6x1", "0,0,0,0,0,1,0,0"
+        Dics.Add "6x6", "0,0,0,0,6,0,0,0"
+        Dics.Add "6x7", "0,0,0,0,6,1,0,0"
+        Dics.Add "6x15", "0,15,0,0,0,0,0,0"
+        Dics.Add "6x20", "0,0,20,0,0,0,0,0"
+        Dics.Add "6x21", "6,15,0,0,0,0,0,0"
+        Dics.Add "6x22", "0,0,0,15,6,1,0,0"
+        Dics.Add "6x35", "0,15,20,0,0,0,0,0"
+        Dics.Add "6x41", "6,15,20,0,0,0,0,0"
+        Dics.Add "6x42", "0,0,20,15,6,1,0,0"
+        Dics.Add "6x50", "0,15,20,15,0,0,0,0"
+        Dics.Add "6x56", "6,15,20,15,0,0,0,0"
+        Dics.Add "6x57", "0,15,20,15,6,1,0,0"
+        Dics.Add "6x62", "6,15,20,15,6,0,0,0"
+        Dics.Add "6x63", "6,15,20,15,6,1,0,0"
+           
+        Dics.Add "7x1", "0,0,0,0,0,0,1,0"
+        Dics.Add "7x7", "0,0,0,0,0,7,0,0"
+        Dics.Add "7x8", "0,0,0,0,0,7,1,0"
+        Dics.Add "7x21", "0,0,0,0,21,0,0,0"
+        Dics.Add "7x35", "0,0,0,35,0,0,0,0"
+        Dics.Add "7x120", "0,21,35,35,21,7,1,0"
+        Dics.Add "7x127", "7,21,35,35,21,7,1,0"
+        
+        Dics.Add "8x1", "0,0,0,0,0,0,0,1"
+        Dics.Add "8x8", "0,0,0,0,0,0,8,0"
+        Dics.Add "8x9", "0,0,0,0,0,0,8,1"
+        Dics.Add "8x28", "0,0,0,0,0,28,0,0"
+        Dics.Add "8x56", "0,0,0,0,56,0,0,0"
+        Dics.Add "8x70", "0,0,0,70,0,0,0,0"
+        Dics.Add "8x247", "0,28,56,70,56,28,8,1"
+        Dics.Add "8x255", "8,28,56,70,56,28,8,1"
+        
+        
+        For k = 1 To oBook.ActiveSheet.UsedRange.Rows.Count
+            Set tempDics = CreateObject("scripting.Dictionary")
+            m = 0
+            BetLine = oSheet.Cells(k, 1)
+            BetType = ""
+            AllupType = Split(Split(BetLine, "x")(0), " ")(UBound(Split(Split(BetLine, "x")(0), " "))) & "x" & Split(Split(BetLine, "x")(1), " ")(0)
+            
+            Betcount = 0
+            SingelBetValue = ""
+            pmulegs1 = ""
+            pmulegs2 = ""
+            pmulegs3 = ""
+            pmulegs4 = ""
+            pmulegs5 = ""
+            pmulegs6 = ""
+            pmulegs7 = ""
+            pmulegsAll = ""
+            
+            UpdateBetLine = Split(Replace(Split(BetLine, Split(BetLine, " ")(3))(1), " ", ""), "$")(0)
+            UnitAmount = Split(Replace(Split(BetLine, Split(BetLine, " ")(3))(1), " ", ""), "$")(1)
+            
+            AllUpDic = Split(UpdateBetLine, "/")
+            
+            For Each bet In AllUpDic
+            
+                If InStr(bet, "WIN") > 0 Then
+                
+                    BetType = "WIN"
+                    
+                    ComValue = Split(bet, "*")(1)
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, "F") = 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                        
+                    If InStr(bet, "F") > 0 And InStr(bet, "+") = 0 And InStr(bet, ">") = 0 Then
+                        HorseNum = 14
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                End If
+                
+                If InStr(bet, "PLA") > 0 Then
+                           
+                    BetType = "PLA"
+                    
+                    ComValue = Split(bet, "*")(1)
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, "F") = 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, "+") = 0 And InStr(bet, ">") = 0 Then
+                        HorseNum = 14
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                
+                End If
+                
+                If InStr(bet, "QIN") > 0 Then
+                
+                    BetType = "QIN"
+                    
+                    ComValue = Split(bet, "*")(1)
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, "F") = 0 And InStr(bet, ">") = 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 2
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, ">") > 0 Then
+                      
+                        HorseNum = 13
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "+") > 0 And InStr(bet, ">") > 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, "+") = 0 And InStr(bet, ">") = 0 Then
+                        HorseNum = 14
+                        HorseSel = 2
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                
+                End If
+                
+                If InStr(bet, "QPL") > 0 Then
+                
+                    BetType = "QPL"
+                    
+                    ComValue = Split(bet, "*")(1)
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, "F") = 0 And InStr(bet, ">") = 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 2
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, ">") > 0 Then
+                      
+                        HorseNum = 13
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "+") > 0 And InStr(bet, ">") > 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, "+") = 0 And InStr(bet, ">") = 0 Then
+                        HorseNum = 14
+                        HorseSel = 2
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                End If
+                
+                 If InStr(bet, "TRI") > 0 Then
+                
+                    BetType = "TRI"
+                    
+                    ComValue = Split(bet, "*")(1)
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, "F") = 0 And InStr(bet, ">") = 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 3
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, ">") > 0 And InStr(bet, "F") = 0 Then
+                        
+                        If InStr(Split(ComValue, ">")(0), "+") <= 0 Then
+                            HorseNum = UBound(Split(bet, "+")) + 1
+                            HorseSel = 2
+                            gateValue = Combin(HorseNum, HorseSel)
+                            tempDics.Add m, gateValue & "-S"
+                            m = m + 1
+                        Else
+                            HorseNum = UBound(Split(bet, "+"))
+                            HorseSel = 1
+                            gateValue = Combin(HorseNum, HorseSel)
+                            tempDics.Add m, gateValue & "-S"
+                            m = m + 1
+                        End If
+                        
+                    End If
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, ">") > 0 And InStr(bet, "F") > 0 Then
+                        
+                        If InStr(Split(ComValue, ">")(0), "+") <= 0 Then
+                            HorseNum = 13
+                            HorseSel = 2
+                            gateValue = Combin(HorseNum, HorseSel)
+                            tempDics.Add m, gateValue & "-S"
+                            m = m + 1
+                        Else
+                            HorseNum = 12
+                            HorseSel = 1
+                            gateValue = Combin(HorseNum, HorseSel)
+                            tempDics.Add m, gateValue & "-S"
+                            m = m + 1
+                        End If
+                          
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, "+") = 0 And InStr(bet, ">") = 0 Then
+                        HorseNum = 14
+                        HorseSel = 3
+                        gateValue = Combin(HorseNum, HorseSel)
+                        tempDics.Add m, gateValue & "-S"
+                        m = m + 1
+                    End If
+                   
+                End If
+                
+                  If InStr(bet, "QQP") > 0 Then
+                
+                    BetType = "QIN/QPL"
+                    
+                    ComValue = Split(bet, "*")(1)
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, "F") = 0 And InStr(bet, ">") = 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 2
+                        gateValue = Combin(HorseNum, HorseSel) * 2
+                        tempDics.Add m, gateValue & "-Q"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, ">") > 0 Then
+                      
+                        HorseNum = 13
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel) * 2
+                        tempDics.Add m, gateValue & "-Q"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "+") > 0 And InStr(bet, ">") > 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel) * 2
+                        tempDics.Add m, gateValue & "-Q"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, "+") = 0 And InStr(bet, ">") = 0 Then
+                        HorseNum = 14
+                        HorseSel = 2
+                        gateValue = Combin(HorseNum, HorseSel) * 2
+                        tempDics.Add m, gateValue & "-Q"
+                        m = m + 1
+                    End If
+                   
+                End If
+                
+                If InStr(bet, "W-P") > 0 Then
+                
+                    BetType = "WIN/PLA"
+                    
+                    ComValue = Split(bet, "*")(1)
+                    
+                    If InStr(bet, "+") >= 0 And InStr(bet, "F") = 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel) * 2
+                        tempDics.Add m, gateValue & "-W"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, ">") > 0 Then
+                      
+                        HorseNum = 13
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel) * 2
+                        tempDics.Add m, gateValue & "-W"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "+") > 0 And InStr(bet, ">") > 0 Then
+                      
+                        HorseNum = UBound(Split(bet, "+")) + 1
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel) * 2
+                        tempDics.Add m, gateValue & "-W"
+                        m = m + 1
+                    End If
+                    
+                    If InStr(bet, "F") > 0 And InStr(bet, "+") = 0 And InStr(bet, ">") = 0 Then
+                        HorseNum = 14
+                        HorseSel = 1
+                        gateValue = Combin(HorseNum, HorseSel) * 2
+                        tempDics.Add m, gateValue & "-W"
+                        m = m + 1
+                    End If
+                End If
+                
+            Next
+    ' ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+               For Each Key In tempDics.keys
+                   SingelBetValue = SingelBetValue & "/" & tempDics(Key)
+                   
+               Next
+               pmulegs7 = ""
+               i = UBound(Split(SingelBetValue, "/"))
+               If InStr(UnitAmount, "F") > 0 Then
+                    
+                    TotalAmount = Split(UnitAmount, "F")(0)
+                    For Each Key In Dics.keys
+                     
+                             If AllupType = Key Then
+                                
+                                 Kinds = Split(Dics(Key), ",")
+                            
+                                        For j = 0 To UBound(Kinds)
+                                    
+                                             If Kinds(j) <> 0 And j = 0 Then
+                                             
+                                                 For a = 1 To i
+                                                     
+                                                     Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                     
+                                                 Next
+                                             
+                                             End If
+                                         
+                                             If Kinds(j) <> 0 And j = 1 Then
+                      
+                                               
+                                                    For a = 1 To i
+                                                        For b = a + 1 To i
+                                                            Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0) * Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                        Next
+                                                    Next
+                                                                                    
+                                             End If
+                                            
+                                             If Kinds(j) <> 0 And j = 2 Then
+                                               
+                                                    For a = 1 To i
+                                                        For b = a + 1 To i
+                                                            For c = b + 1 To i
+                                                                Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0) * Split(Split(SingelBetValue, "/")(b), "-")(0) * Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                            Next
+                                                        Next
+                                                    Next
+                                             End If
+                                         
+                                             If Kinds(j) <> 0 And j = 3 Then
+                                              
+                                                  For a = 1 To i
+                                                      For b = a + 1 To i
+                                                          For c = b + 1 To i
+                                                              For d = c + 1 To i
+                                                                  Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0) * Split(Split(SingelBetValue, "/")(b), "-")(0) * Split(Split(SingelBetValue, "/")(c), "-")(0) * Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                              Next
+                                                          Next
+                                                      Next
+                                                  Next
+                                             End If
+                                         
+                                             If Kinds(j) <> 0 And j = 4 Then
+    
+                                                   For a = 1 To i
+                                                       For b = a + 1 To i
+                                                           For c = b + 1 To i
+                                                               For d = c + 1 To i
+                                                                   For e = d + 1 To i
+                                                                       Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0) * Split(Split(SingelBetValue, "/")(b), "-")(0) * Split(Split(SingelBetValue, "/")(c), "-")(0) * Split(Split(SingelBetValue, "/")(d), "-")(0) * Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                   Next
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                             End If
+                                         
+                                             If Kinds(j) <> 0 And j = 5 Then
+                                                  For a = 1 To i
+                                                      For b = a + 1 To i
+                                                          For c = b + 1 To i
+                                                              For d = c + 1 To i
+                                                                  For e = d + 1 To i
+                                                                      For f = e + 1 To i
+                                                                          Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0) * Split(Split(SingelBetValue, "/")(b), "-")(0) * Split(Split(SingelBetValue, "/")(c), "-")(0) * Split(Split(SingelBetValue, "/")(d), "-")(0) * Split(Split(SingelBetValue, "/")(e), "-")(0) * Split(Split(SingelBetValue, "/")(f), "-")(0)
+                                                                      Next
+                                                                  Next
+                                                              Next
+                                                          Next
+                                                      Next
+                                                  Next
+                                             End If
+                                         
+                                             If Kinds(j) <> 0 And j = 6 Then
+    
+                                                   For a = 1 To i
+                                                       For b = a + 1 To i
+                                                           For c = b + 1 To i
+                                                               For d = c + 1 To i
+                                                                   For e = d + 1 To i
+                                                                       For f = e + 1 To i
+                                                                           For g = f + 1 To i
+                                                                               Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0) * Split(Split(SingelBetValue, "/")(b), "-")(0) * Split(Split(SingelBetValue, "/")(c), "-")(0) * Split(Split(SingelBetValue, "/")(d), "-")(0) * Split(Split(SingelBetValue, "/")(e), "-")(0) * Split(Split(SingelBetValue, "/")(f), "-")(0) * Split(Split(SingelBetValue, "/")(g), "-")(0)
+                                                                           Next
+                                                                       Next
+                                                                   Next
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                              End If
+                                         
+                                             If Kinds(j) <> 0 And j = 7 Then
+                                            
+                                                  For a = 1 To i
+                                                      For b = a + 1 To i
+                                                          For c = b + 1 To i
+                                                              For d = c + 1 To i
+                                                                  For e = d + 1 To i
+                                                                      For f = e + 1 To i
+                                                                          For g = f + 1 To i
+                                                                              For h = g + 1 To i
+                                                                                  Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0) * Split(Split(SingelBetValue, "/")(b), "-")(0) * Split(Split(SingelBetValue, "/")(c), "-")(0) * Split(Split(SingelBetValue, "/")(d), "-")(0) * Split(Split(SingelBetValue, "/")(e), "-")(0) * Split(Split(SingelBetValue, "/")(f), "-")(0) * Split(Split(SingelBetValue, "/")(g), "-")(0) * Split(Split(SingelBetValue, "/")(h), "-")(0)
+                                                                              Next
+                                                                          Next
+                                                                      Next
+                                                                  Next
+                                                              Next
+                                                          Next
+                                                      Next
+                                                  Next
+                                             End If
+                                        Next
+                                    End If
+                                
+                                Next
+                                   
+                      For Each Key In Dics.keys
+                     
+                         If AllupType = Key Then
+                            
+                             Kinds = Split(Dics(Key), ",")
+                        
+                               For j = 0 To UBound(Kinds)
+                                
+                                        
+                                         If Kinds(j) <> 0 And j = 1 Then
+                                                pmulegs = ""
+                                         
+                                               k1 = Kinds(j)
+                                               
+                                                
+                                                 For a = 1 To i
+                                                     For b = a + 1 To i
+                                                     
+                                                         COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                         COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                        
+                                                         
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                             pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb / 2 & Chr(10)
+                                                             pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb / 2 & Chr(10)
+                                                             k1 = k1 + 1
+                                                          End If
+                                                          
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                             pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb / 2 & Chr(10)
+                                                             pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb / 2 & Chr(10)
+                                                             k1 = k1 + 1
+                                                          End If
+                                                          
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                    
+                                                            pmulegs = pmulegs & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb & Chr(10)
+                                                    
+                    
+                                                          End If
+
+                                                       Next
+                                                 Next
+                                                 
+                                                 pmulegs1 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs & Chr(10)
+                                                 
+                                                 
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 2 Then
+                                            pmulegs = ""
+                                               
+                                               k1 = Kinds(j)
+                                               
+                                                 For a = 1 To i
+                                                     For b = a + 1 To i
+                                                         For c = b + 1 To i
+                                                         
+                                                            COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                            COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                            COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                            
+                                                           
+                                                            
+                                                            If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                             pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc / 2 & Chr(10)
+                                                             pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc / 2 & Chr(10)
+                                                             k1 = k1 + 1
+                                                          End If
+                                                          
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                             pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc / 2 & Chr(10)
+                                                             pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc / 2 & Chr(10)
+                                                             k1 = k1 + 1
+                                                          End If
+                                                          
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                          
+                                                            pmulegs = pmulegs & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc & Chr(10)
+                                                            
+                                                          End If
+
+                                                         Next
+                                                     Next
+                                                 Next
+                                                    pmulegs2 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                                    
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 3 Then
+                                          pmulegs = ""
+                                           
+                                            k1 = Kinds(j)
+                                           
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                           
+                                                            COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                            COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                            COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                            COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                
+                                                            
+                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                   pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / 2 & Chr(10)
+                                                                   pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / 2 & Chr(10)
+                                                                   k1 = k1 + 1
+                                                                End If
+                                                                
+                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                   pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / 2 & Chr(10)
+                                                                   pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / 2 & Chr(10)
+                                                                   k1 = k1 + 1
+                                                                End If
+                                                                
+                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                  pmulegs = pmulegs & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd & Chr(10)
+                                                                End If
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                               
+                                                pmulegs3 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                                
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 4 Then
+                                         pmulegs = ""
+                                            k1 = Kinds(j)
+                                         
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                               For e = d + 1 To i
+                                                                    COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                                    COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                                    COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                                    COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                    COMe = Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                   
+                                                                 
+                                                                   
+                                                                    If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                       pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / 2 & Chr(10)
+                                                                       pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / 2 & Chr(10)
+                                                                       k1 = k1 + 1
+                                                                    End If
+                                                                    
+                                                                    If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                       pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / 2 & Chr(10)
+                                                                       pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / 2 & Chr(10)
+                                                                       k1 = k1 + 1
+                                                                    End If
+                                                                    
+                                                                    If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                      pmulegs = pmulegs & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe & Chr(10)
+                                                                    End If
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                                pmulegs4 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                         End If
+                                         
+                                          If Kinds(j) <> 0 And j = 5 Then
+                                             pmulegs = ""
+                                             k1 = Kinds(j)
+                                         
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                               For e = d + 1 To i
+                                                                   For f = e + 1 To i
+                                                                     COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                                     COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                                     COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                                     COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                     COMe = Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                     COMf = Split(Split(SingelBetValue, "/")(f), "-")(0)
+                                                                    
+                                                                     
+                                                                        If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                           pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / 2 & Chr(10)
+                                                                           pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / 2 & Chr(10)
+                                                                           k1 = k1 + 1
+                                                                        End If
+                                                                        
+                                                                        If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                           pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / 2 & Chr(10)
+                                                                           pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / 2 & Chr(10)
+                                                                           k1 = k1 + 1
+                                                                        End If
+                                                                        
+                                                                        If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                          pmulegs = pmulegs & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf & Chr(10)
+                                                                        End If
+                                                                   Next
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                                pmulegs5 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 6 Then
+                                            pmulegs = ""
+                                            k1 = Kinds(j)
+                                         
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                               For e = d + 1 To i
+                                                                   For f = e + 1 To i
+                                                                       For g = f + 1 To i
+                                                                            COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                                            COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                                            COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                                            COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                            COMe = Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                            COMf = Split(Split(SingelBetValue, "/")(f), "-")(0)
+                                                                            COMg = Split(Split(SingelBetValue, "/")(g), "-")(0)
+                                                                            
+                                                                            
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                                   pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / 2 & Chr(10)
+                                                                                   pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / 2 & Chr(10)
+                                                                                   k1 = k1 + 1
+                                                                                End If
+                                                                                
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                                   pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / 2 & Chr(10)
+                                                                                   pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / 2 & Chr(10)
+                                                                                   k1 = k1 + 1
+                                                                                End If
+                                                                                
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                                  pmulegs = pmulegs & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg & Chr(10)
+                                                                                End If
+                                                                       Next
+                                                                   Next
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                               pmulegs6 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                         End If
+                                         
+                                          If Kinds(j) <> 0 And j = 7 Then
+                                          pmulegs = ""
+                                            k1 = Kinds(j)
+                                         
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                               For e = d + 1 To i
+                                                                   For f = e + 1 To i
+                                                                       For g = f + 1 To i
+                                                                           For h = g + 1 To i
+                                                                                 COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                                                 COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                                                 COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                                                 COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                                 COMe = Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                                 COMf = Split(Split(SingelBetValue, "/")(f), "-")(0)
+                                                                                 COMg = Split(Split(SingelBetValue, "/")(g), "-")(0)
+                                                                                 COMh = Split(Split(SingelBetValue, "/")(h), "-")(0)
+                                                                                
+                                                                               
+                                                                               If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                                   pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / 2 & Chr(10)
+                                                                                   pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / 2 & Chr(10)
+                                                                                   k1 = k1 + 1
+                                                                                End If
+                                                                                
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                                   pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / 2 & Chr(10)
+                                                                                   pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / 2 & Chr(10)
+                                                                                   k1 = k1 + 1
+                                                                                End If
+                                                                                
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                                  pmulegs = pmulegs & "sel_invest=" & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & (TotalAmount / Betcount) * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh & Chr(10)
+                                                                                End If
+                                                                           Next
+                                                                       Next
+                                                                   Next
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                               pmulegs7 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                            
+                                         End If
+                                         
+                                   Next
+                         End If
+                         
+                       Next
+             
+                 
+                       pmulegsAll = pmulegs1 & pmulegs2 & pmulegs3 & pmulegs4 & pmulegs5 & pmulegs6 & pmulegs7
+                
+                       Cells(k, 2).Value = "Verify data in AP_DB should be correct." & Chr(10) & "1. racing_tickets table, insert new record:" & Chr(10) & "UnitAmount= " & (TotalAmount / Betcount) & Chr(10) & "ticket_cost_amt= " & TotalAmount & Chr(10) & "bet_count= " & Betcount & Chr(10) & "is_flexi_bet=1;"
+                       Cells(k, 3).Value = "Verify data in PMUCE_DB should be correct." & Chr(10) & "1. tickets table, insert new record:" & Chr(10) & "UnitAmount= " & (TotalAmount / Betcount) & Chr(10) & "total_invest= " & TotalAmount & Chr(10) & "2.Verify pmu_allup_legs table:" & Chr(10) & pmulegsAll
+                           
+                       Set tempDics = Nothing
+
+                    Else
+                       
+                       For Each Key In Dics.keys
+                     
+                         If AllupType = Key Then
+                            
+                             Kinds = Split(Dics(Key), ",")
+                        
+                               For j = 0 To UBound(Kinds)
+                                
+                                         If Kinds(j) <> 0 And j = 0 Then
+                                         
+                                             For a = 1 To i
+                                                     
+                                                 Betcount = Betcount + Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                 
+                                             Next
+                                             
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 1 Then
+                                                pmulegs = ""
+                                         
+                                               k1 = Kinds(j)
+                                               
+                                                
+                                                 For a = 1 To i
+                                                     For b = a + 1 To i
+                                                     
+                                                         COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                         COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                         Betcount = Betcount + COMa * COMb
+                                                         
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                             pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb / 2 & Chr(10)
+                                                             pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb / 2 & Chr(10)
+                                                             k1 = k1 + 1
+                                                          End If
+                                                          
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                             pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb / 2 & Chr(10)
+                                                             pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb / 2 & Chr(10)
+                                                             k1 = k1 + 1
+                                                          End If
+                                                          
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                    
+                                                            pmulegs = pmulegs & "sel_invest=" & UnitAmount * COMa * COMb / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb & Chr(10)
+                                                    
+                    
+                                                          End If
+
+                                                       Next
+                                                 Next
+                                                 
+                                                 pmulegs1 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs & Chr(10)
+                                                 
+                                                 
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 2 Then
+                                            pmulegs = ""
+                                               
+                                               k1 = Kinds(j)
+                                               
+                                                 For a = 1 To i
+                                                     For b = a + 1 To i
+                                                         For c = b + 1 To i
+                                                         
+                                                            COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                            COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                            COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                            
+                                                            Betcount = Betcount + COMa * COMb * COMc
+                                                            
+                                                            If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                             pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc / 2 & Chr(10)
+                                                             pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc / 2 & Chr(10)
+                                                             k1 = k1 + 1
+                                                          End If
+                                                          
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                             pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc / 2 & Chr(10)
+                                                             pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc / 2 & Chr(10)
+                                                             k1 = k1 + 1
+                                                          End If
+                                                          
+                                                          If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                          
+                                                            pmulegs = pmulegs & "sel_invest=" & UnitAmount * COMa * COMb * COMc / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc & Chr(10)
+                                                            
+                                                          End If
+
+                                                         Next
+                                                     Next
+                                                 Next
+                                                    pmulegs2 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                                    
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 3 Then
+                                          pmulegs = ""
+                                           
+                                            k1 = Kinds(j)
+                                           
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                           
+                                                            COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                            COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                            COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                            COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                
+                                                            Betcount = Betcount + COMa * COMb * COMc * COMd
+                                                            
+                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                   pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd / 2 & Chr(10)
+                                                                   pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd / 2 & Chr(10)
+                                                                   k1 = k1 + 1
+                                                                End If
+                                                                
+                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                   pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd / 2 & Chr(10)
+                                                                   pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd / 2 & Chr(10)
+                                                                   k1 = k1 + 1
+                                                                End If
+                                                                
+                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                  pmulegs = pmulegs & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd & Chr(10)
+                                                                End If
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                               
+                                                pmulegs3 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                                
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 4 Then
+                                         pmulegs = ""
+                                            k1 = Kinds(j)
+                                         
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                               For e = d + 1 To i
+                                                                    COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                                    COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                                    COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                                    COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                    COMe = Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                   
+                                                                   Betcount = Betcount + COMa * COMb * COMc * COMd * COMe
+                                                                   
+                                                                    If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                       pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe / 2 & Chr(10)
+                                                                       pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe / 2 & Chr(10)
+                                                                       k1 = k1 + 1
+                                                                    End If
+                                                                    
+                                                                    If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                       pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe / 2 & Chr(10)
+                                                                       pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe / 2 & Chr(10)
+                                                                       k1 = k1 + 1
+                                                                    End If
+                                                                    
+                                                                    If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                      pmulegs = pmulegs & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe & Chr(10)
+                                                                    End If
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                                pmulegs4 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                         End If
+                                         
+                                          If Kinds(j) <> 0 And j = 5 Then
+                                             pmulegs = ""
+                                             k1 = Kinds(j)
+                                         
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                               For e = d + 1 To i
+                                                                   For f = e + 1 To i
+                                                                     COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                                     COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                                     COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                                     COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                     COMe = Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                     COMf = Split(Split(SingelBetValue, "/")(f), "-")(0)
+                                                                    
+                                                                     Betcount = Betcount + COMa * COMb * COMc * COMd * COMe * COMf
+                                                                           If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                           pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / 2 & Chr(10)
+                                                                           pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / 2 & Chr(10)
+                                                                           k1 = k1 + 1
+                                                                        End If
+                                                                        
+                                                                        If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                           pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / 2 & Chr(10)
+                                                                           pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / 2 & Chr(10)
+                                                                           k1 = k1 + 1
+                                                                        End If
+                                                                        
+                                                                        If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                          pmulegs = pmulegs & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf & Chr(10)
+                                                                        End If
+                                                                   Next
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                                pmulegs5 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                         End If
+                                         
+                                         If Kinds(j) <> 0 And j = 6 Then
+                                            pmulegs = ""
+                                            k1 = Kinds(j)
+                                         
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                               For e = d + 1 To i
+                                                                   For f = e + 1 To i
+                                                                       For g = f + 1 To i
+                                                                            COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                                            COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                                            COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                                            COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                            COMe = Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                            COMf = Split(Split(SingelBetValue, "/")(f), "-")(0)
+                                                                            COMg = Split(Split(SingelBetValue, "/")(g), "-")(0)
+                                                                            
+                                                                            Betcount = Betcount + COMa * COMb * COMc * COMd * COMe * COMf * COMg
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                                   pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / 2 & Chr(10)
+                                                                                   pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / 2 & Chr(10)
+                                                                                   k1 = k1 + 1
+                                                                                End If
+                                                                                
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                                   pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / 2 & Chr(10)
+                                                                                   pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / 2 & Chr(10)
+                                                                                   k1 = k1 + 1
+                                                                                End If
+                                                                                
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                                  pmulegs = pmulegs & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg & Chr(10)
+                                                                                End If
+                                                                       Next
+                                                                   Next
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                               pmulegs6 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                         End If
+                                         
+                                          If Kinds(j) <> 0 And j = 7 Then
+                                          pmulegs = ""
+                                            k1 = Kinds(j)
+                                         
+                                               For a = 1 To i
+                                                   For b = a + 1 To i
+                                                       For c = b + 1 To i
+                                                           For d = c + 1 To i
+                                                               For e = d + 1 To i
+                                                                   For f = e + 1 To i
+                                                                       For g = f + 1 To i
+                                                                           For h = g + 1 To i
+                                                                                 COMa = Split(Split(SingelBetValue, "/")(a), "-")(0)
+                                                                                 COMb = Split(Split(SingelBetValue, "/")(b), "-")(0)
+                                                                                 COMc = Split(Split(SingelBetValue, "/")(c), "-")(0)
+                                                                                 COMd = Split(Split(SingelBetValue, "/")(d), "-")(0)
+                                                                                 COMe = Split(Split(SingelBetValue, "/")(e), "-")(0)
+                                                                                 COMf = Split(Split(SingelBetValue, "/")(f), "-")(0)
+                                                                                 COMg = Split(Split(SingelBetValue, "/")(g), "-")(0)
+                                                                                 COMh = Split(Split(SingelBetValue, "/")(h), "-")(0)
+                                                                                
+                                                                               Betcount = Betcount + COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh
+                                                                               If Split(Split(SingelBetValue, "/")(a), "-")(1) = "Q" Then
+                                                                                   pmulegs = pmulegs & "For QIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / 2 & Chr(10)
+                                                                                   pmulegs = pmulegs & "For QPL POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / 2 & Chr(10)
+                                                                                   k1 = k1 + 1
+                                                                                End If
+                                                                                
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "W" Then
+                                                                                   pmulegs = pmulegs & "For WIN POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / 2 & Chr(10)
+                                                                                   pmulegs = pmulegs & "For PLA POOL" & Chr(10) & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / 2 & Chr(10)
+                                                                                   k1 = k1 + 1
+                                                                                End If
+                                                                                
+                                                                                If Split(Split(SingelBetValue, "/")(a), "-")(1) = "S" Then
+                                                                                  pmulegs = pmulegs & "sel_invest=" & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh / COMa & Chr(10) & "total_invest= " & UnitAmount * COMa * COMb * COMc * COMd * COMe * COMf * COMg * COMh & Chr(10)
+                                                                                End If
+                                                                           Next
+                                                                       Next
+                                                                   Next
+                                                               Next
+                                                           Next
+                                                       Next
+                                                   Next
+                                               Next
+                                               pmulegs7 = "insert " & k1 & " records for " & j + 1 & " legs: " & Chr(10) & pmulegs
+                                            
+                                         End If
+                                         
+                                   Next
+                         End If
+                         
+                       Next
+             
+                 
+                 pmulegsAll = pmulegs1 & pmulegs2 & pmulegs3 & pmulegs4 & pmulegs5 & pmulegs6 & pmulegs7
+          
+                 
+                 Cells(k, 2).Value = "Verify data in AP_DB should be correct." & Chr(10) & "1. racing_tickets table, insert new record:" & Chr(10) & "unit_bet_amt= " & UnitAmount & Chr(10) & "ticket_cost_amt= " & Betcount * UnitAmount & Chr(10) & "bet_count= " & Betcount & Chr(10) & "is_allup=1;"
+                 Cells(k, 3).Value = "Verify data in PMUCE_DB should be correct." & Chr(10) & "1. tickets table, insert new record:" & Chr(10) & "unit_invest= " & UnitAmount & Chr(10) & "total_invest= " & Betcount * UnitAmount & Chr(10) & "2.Verify pmu_allup_legs table:" & Chr(10) & pmulegsAll
+
+                       
+            Set tempDics = Nothing
+            
+            End If
+     Next
+    '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    oBook.Close
+    Set Dics = Nothing
+    Set oSheet = Nothing
+    Set oBook = Nothing
+    Set fso = Nothing
+    Set oexcel = Nothing
+    
+End Sub
+
+    Function Combin(x, y)
+        fenz = 1
+        femu = x
+        If x > y And y > 1 Then
+            For Z = 2 To y
+                
+                fenz = fenz * Z
+                femu = femu * (x - 1)
+                x = x - 1
+            Next
+            y = -1
+            Combin = femu / fenz
+        End If
+        
+        If x > y And y = 1 Then
+  
+            Combin = x
+        End If
+        
+        If x = y Then
+
+            Combin = 1
+        End If
+
+    End Function
+    
+    
+
+
+
+
+
+
+
+
+
