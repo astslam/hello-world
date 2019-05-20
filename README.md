@@ -1,6 +1,1 @@
-# hello-world
-testing
-
-added text 
-
-add more text
+# HKJC Race Bet generate test data
